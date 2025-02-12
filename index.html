@@ -2,56 +2,54 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <!-- Dodane meta tagi do kontroli powiększania -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Walentynka ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         * {
-            /* Blokada selekcji tekstu/zdjęć */
-            user-select: none; 
-            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-touch-callout: none;
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             background: #FFD1DC;
-            overflow-x: hidden;
-            touch-action: pan-y; /* Blokada gestów powiększania */
+            overflow: hidden;
+            touch-action: none;
         }
 
         .container {
+            position: relative;
+            z-index: 2;
             text-align: center;
             padding: 20px;
-            width: 90%;
-            max-width: 600px;
         }
 
         h1 {
             font-family: 'Great Vibes', cursive;
             color: #C71585;
             text-shadow: 2px 2px 4px rgba(199, 21, 133, 0.3);
-            margin: 20px 0;
-            font-size: 2.5rem; /* Nowa jednostka rem zamiast vw */
-            line-height: 1.2;
+            font-size: clamp(1.8rem, 8vw, 3.5rem);
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
         }
 
         .hearts {
-            margin-top: 20px;
             display: flex;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
             animation: float 3s ease-in-out infinite;
         }
 
         .heart {
-            font-size: 2.5rem; /* Responsywne jednostki */
+            font-size: clamp(2rem, 8vw, 3rem);
             animation: pulse 1.5s infinite;
         }
 
@@ -61,38 +59,47 @@
         .heart:nth-child(3) { color: #DB7093; }
         .heart:nth-child(4) { color: #FFB6C1; }
 
-        /* Animacje bez zmian */
-        @keyframes pulse { /* ... */ }
-        @keyframes float { /* ... */ }
-        @keyframes fadeIn { /* ... */ }
-
-        /* Media queries dla telefonów */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem; /* Mniejszy tekst na telefonach */
-                margin: 10px 0;
-            }
-            
-            .heart {
-                font-size: 2rem; /* Mniejsze serduszka */
-            }
-
-            .bg-heart {
-                font-size: 14px !important; /* Mniejsze serca w tle */
-            }
+        /* Animacje */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem; /* Ekstra małe ekrany */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animowane tło */
+        .bg-heart {
+            position: fixed;
+            opacity: 0.15;
+            font-size: 20px;
+            animation: floating 12s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translate(0, 150vh) rotate(0deg);
+            }
+            100% {
+                transform: translate(calc(-100vw + 50px), -50vh) rotate(360deg);
             }
         }
     </style>
 </head>
 <body>
     <div class="bg-hearts"></div>
+    
     <div class="container">
-        <h1>Dla Mojej Kochanej Walentynki</h1>
+        <h1>Dla Mojej Kochanej Walentynki </h1>
         <div class="hearts">
             <div class="heart">❤️</div>
             <div class="heart">❤️</div>
@@ -102,20 +109,27 @@
     </div>
 
     <script>
-        // Zmodyfikowany skrypt dla mniejszych serc w tle
+        // Generowanie serc w tle
         function createBgHearts() {
-            const container = document.querySelector('.bg-hearts');
-            for (let i = 0; i < 15; i++) {
+            const container = document.body;
+            for (let i = 0; i < 25; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'bg-heart';
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 10 + 8) + 'px'; // Mniejsze serca
-                heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                heart.style.top = '-50px';
+                heart.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = Math.random() * 20 + 15 + 'px';
                 container.appendChild(heart);
             }
         }
         createBgHearts();
+
+        // Blokada zoomu
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
     </script>
 </body>
 </html>
