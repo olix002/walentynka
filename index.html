@@ -24,39 +24,45 @@
             touch-action: none;
         }
 
+        .top-text {
+            position: fixed;
+            top: 20px;
+            font-family: 'Arial', sans-serif;
+            color: #C71585;
+            font-size: 1.2rem;
+            text-align: center;
+            width: 100%;
+            z-index: 4;
+        }
+
         .container {
             position: relative;
             z-index: 2;
             text-align: center;
             padding: 20px;
+            margin-top: 40px;
         }
 
         h1 {
             font-family: 'Great Vibes', cursive;
             color: #C71585;
             text-shadow: 2px 2px 4px rgba(199, 21, 133, 0.3);
-            font-size: clamp(1.8rem, 8vw, 3.5rem);
+            font-size: clamp(2.5rem, 10vw, 4.5rem);
             margin-bottom: 30px;
             animation: fadeIn 2s ease-out;
         }
 
         .hearts {
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
             justify-content: center;
             animation: float 3s ease-in-out infinite;
         }
 
         .heart {
-            font-size: clamp(2rem, 8vw, 3rem);
+            font-size: clamp(4rem, 15vw, 6rem);
             animation: pulse 1.5s infinite;
+            color: #FF1493;
         }
-
-        .heart:nth-child(1) { color: #FF69B4; }
-        .heart:nth-child(2) { color: #FF1493; }
-        .heart:nth-child(3) { color: #DB7093; }
-        .heart:nth-child(4) { color: #FFB6C1; }
 
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -87,7 +93,6 @@
             100% { transform: translate(calc(-100vw + 50px), -50vh) rotate(360deg); }
         }
 
-        /* NOWY STYL PRZYCISKU */
         .magic-button {
             position: fixed;
             bottom: 30px;
@@ -97,8 +102,8 @@
             height: 60px;
             border-radius: 30px;
             border: none;
-            font-family: 'Comic Sans MS', cursive;
-            font-size: 1.4rem;
+            font-family: 'Arial', sans-serif;
+            font-size: 1.6rem;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 8px 15px rgba(0,0,0,0.2);
@@ -113,7 +118,6 @@
             background: #FF1493;
         }
 
-        /* ANIMACJA BUZIACZKÓW */
         .kiss {
             position: fixed;
             top: -50px;
@@ -132,12 +136,11 @@
 <body>
     <div class="bg-hearts"></div>
     
+    <div class="top-text">Od Twojego Gnojka</div>
+
     <div class="container">
         <h1>Dla Mojej Kochanej Walentynki</h1>
         <div class="hearts">
-            <div class="heart">❤️</div>
-            <div class="heart">❤️</div>
-            <div class="heart">❤️</div>
             <div class="heart">❤️</div>
         </div>
     </div>
@@ -145,7 +148,6 @@
     <button class="magic-button">Kliknij mnie!</button>
 
     <script>
-        // Generowanie serc w tle
         function createBgHearts() {
             const container = document.body;
             for (let i = 0; i < 25; i++) {
@@ -162,20 +164,19 @@
         }
         createBgHearts();
 
-        // Blokada zoomu
         document.addEventListener('gesturestart', function(e) {
             e.preventDefault();
         });
 
-        // Generowanie buziaków
         function createKisses() {
             const numberOfKisses = 30;
             const animationDuration = 1500;
+            const kisses = ['💋', '😘'];
 
             for (let i = 0; i < numberOfKisses; i++) {
                 const kiss = document.createElement('div');
                 kiss.className = 'kiss';
-                kiss.textContent = '💋', '😘';
+                kiss.textContent = kisses[Math.floor(Math.random() * kisses.length)];
                 kiss.style.left = Math.random() * 95 + 'vw';
                 kiss.style.animation = `fall ${Math.random() * 1 + 1}s linear forwards`;
                 document.body.appendChild(kiss);
