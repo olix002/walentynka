@@ -53,13 +53,12 @@
             animation: pulse 1.5s infinite;
         }
 
-        /* Kolory serduszek */
         .heart:nth-child(1) { color: #FF69B4; }
         .heart:nth-child(2) { color: #FF1493; }
         .heart:nth-child(3) { color: #DB7093; }
         .heart:nth-child(4) { color: #FFB6C1; }
 
-        /* Animacje */
+        /* Animacje tła i serc */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -76,7 +75,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Animowane tło */
         .bg-heart {
             position: fixed;
             opacity: 0.15;
@@ -86,12 +84,46 @@
         }
 
         @keyframes floating {
-            0% {
-                transform: translate(0, 150vh) rotate(0deg);
-            }
-            100% {
-                transform: translate(calc(-100vw + 50px), -50vh) rotate(360deg);
-            }
+            0% { transform: translate(0, 150vh) rotate(0deg); }
+            100% { transform: translate(calc(-100vw + 50px), -50vh) rotate(360deg); }
+        }
+
+        /* NOWY PRZYCISK */
+        .magic-button {
+            position: fixed;
+            bottom: 30px;
+            background: #FF69B4;
+            color: white;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: none;
+            font-family: Arial;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, background 0.3s;
+            z-index: 3;
+        }
+
+        .magic-button:hover {
+            transform: scale(1.1);
+            background: #FF1493;
+        }
+
+        /* NOWE Buziaki */
+        .kiss {
+            position: fixed;
+            top: -50px;
+            font-size: 30px;
+            animation: fall 2s linear forwards;
+            opacity: 0.8;
+            z-index: 2;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -99,7 +131,7 @@
     <div class="bg-hearts"></div>
     
     <div class="container">
-        <h1>Dla Mojej Kochanej Walentynki </h1>
+        <h1>Dla Mojej Kochanej Walentynki ❤️</h1>
         <div class="hearts">
             <div class="heart">❤️</div>
             <div class="heart">❤️</div>
@@ -107,6 +139,9 @@
             <div class="heart">❤️</div>
         </div>
     </div>
+
+    <!-- NOWY PRZYCISK -->
+    <button class="magic-button">Kliknij mnie 💖</button>
 
     <script>
         // Generowanie serc w tle
@@ -129,6 +164,29 @@
         // Blokada zoomu
         document.addEventListener('gesturestart', function(e) {
             e.preventDefault();
+        });
+
+        // NOWY KOD - Buziaki
+        function createKisses() {
+            const kisses = ['💋', '😘', '💏', '👩❤️💋👨'];
+            const numberOfKisses = 20;
+
+            for (let i = 0; i < numberOfKisses; i++) {
+                const kiss = document.createElement('div');
+                kiss.className = 'kiss';
+                kiss.textContent = kisses[Math.floor(Math.random() * kisses.length)];
+                kiss.style.left = Math.random() * 95 + 'vw';
+                kiss.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(kiss);
+
+                setTimeout(() => kiss.remove(), 2000);
+            }
+        }
+
+        document.querySelector('.magic-button').addEventListener('click', function() {
+            this.disabled = true;
+            createKisses();
+            setTimeout(() => this.disabled = false, 2000);
         });
     </script>
 </body>
