@@ -1,1 +1,121 @@
+/* style.css */
+/* Główne style */
+body {
+    background: linear-gradient(45deg, #ff99cc, #ff6666);
+    font-family: 'Great Vibes', cursive;
+    color: #5a2d2d;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
 
+/* Nagłówek z animacją */
+.header {
+    text-align: center;
+    padding: 50px 0;
+    animation: fadeIn 2s ease-in;
+}
+
+.header h1 {
+    font-size: 4em;
+    color: #ff1a75;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    margin: 0;
+}
+
+/* Karta z listem miłosnym */
+.love-letter {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.love-letter:hover {
+    transform: translateY(-5px);
+}
+
+/* Animowane serce */
+.heart {
+    font-size: 60px;
+    color: #ff3366;
+    animation: pulse 1.5s infinite;
+    cursor: pointer;
+}
+
+/* Galeria zdjęć */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    border: 3px solid white;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* Sekretny przycisk */
+.secret-button {
+    background: linear-gradient(45deg, #ff66b3, #ff1a75);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin: 20px;
+    box-shadow: 0 4px 10px rgba(255,26,117,0.3);
+}
+
+.secret-button:hover {
+    background: linear-gradient(45deg, #ff1a75, #ff66b3);
+}
+
+/* Animacje */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 3em;
+    }
+    
+    .love-letter {
+        margin: 10px;
+    }
+}
+
+/* Efekt konfetti (dodaj do HTML: <div class="confetti"></div>) */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: #ff0000;
+    pointer-events: none;
+}
